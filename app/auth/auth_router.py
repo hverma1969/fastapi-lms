@@ -4,10 +4,11 @@ from sqlalchemy.orm import Session
 
 from app.auth.deps import get_db
 from app.auth.jwt import create_access_token
-from app.crud import user_crud
-from app.schemas.user import Token, UserCreate, UserLogin
+from app.dtos.user import Token, UserCreate, UserLogin
+from app.services import user_crud
 
-router = APIRouter()
+# router = APIRouter()
+router = APIRouter(prefix="/auth", tags=["auth"])
 
 
 @router.post("/signup", response_model=Token)

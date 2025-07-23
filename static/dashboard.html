@@ -1,0 +1,40 @@
+<script>
+window.onload = async function () {
+    const response = await fetch("/courses");
+    const data = await response.json();
+
+    const container = document.getElementById("dashboard-container");
+
+    data.courses.forEach(course => {
+        const courseDiv = document.createElement("div");
+        courseDiv.innerHTML = `<h2>${course.title}</h2><p>${course.description}</p>`;
+
+        course.lessons.forEach(lesson => {
+            const lessonDiv = document.createElement("div");
+            lessonDiv.innerHTML = `<h3>Lesson: ${lesson.title}</h3>`;
+
+            lesson.quizzes.forEach(quiz => {
+                const quizDiv = document.createElement("div");
+                quizDiv.innerHTML = `<h4>Quiz: ${quiz.title}</h4>`;
+
+                quiz.questions.forEach(question => {
+                    const questionDiv = document.createElement("div");
+                    questionDiv.innerHTML = `<p>Q: ${question.question}</p>`;
+                    quizDiv.appendChild(questionDiv);
+                });
+
+                lessonDiv.appendChild(quizDiv);
+            });
+
+            courseDiv.appendChild(lessonDiv);
+        });
+
+        container.appendChild(courseDiv);
+    });
+};
+</script>
+
+<body>
+  <h1>Welcome to Your Dashboard</h1>
+  <div id="dashboard-container"></div>
+</body>

@@ -1,12 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-# 🔐 Import this:
 from app.auth.deps import get_current_user
-from app.database import get_db
+from app.db_connection import get_db
+from app.dtos.course import CourseCreate, CourseOut
 from app.models.course import Course
 from app.models.user import User
-from app.schemas.course import CourseCreate, CourseOut
 
 router = APIRouter(prefix="/courses", tags=["Courses"])
 
@@ -15,7 +14,7 @@ router = APIRouter(prefix="/courses", tags=["Courses"])
 def create_course(
     course: CourseCreate,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)  # <-- Secures the route
+    current_user: User = Depends(get_current_user)
 ):
     new_course = Course(**course.model_dump())
     db.add(new_course)

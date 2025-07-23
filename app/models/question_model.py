@@ -1,7 +1,7 @@
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
-from app.database import Base
+from app.db_connection import Base
 
 
 class Question(Base):
@@ -13,7 +13,7 @@ class Question(Base):
     option_2 = Column(String, nullable=False)
     option_3 = Column(String, nullable=False)
     option_4 = Column(String, nullable=False)
-    correct_option = Column(Integer, nullable=False)  # Should be 1–4
+    correct_option = Column(Integer, nullable=False)
 
     quiz_id = Column(Integer, ForeignKey("quizzes.id"), nullable=False)
 
